@@ -29,6 +29,9 @@ collected_static/
 *.swo
 *~
 
+# Node (slides)
+slides/node_modules/
+
 # OS
 .DS_Store
 Thumbs.db

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Django ORM — performance</title>
+  <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/white-contrast.css">
+  <!-- Light code theme (Python-friendly); override after reveal theme -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" crossorigin="anonymous">
+  <style>
+    .reveal pre { background: #f6f8fa; }
+    .reveal pre code { background: none; padding: 0.5em; }
+  </style>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+      <section data-markdown="slides.md" data-separator="^\r?\n---\r?\n$" data-separator-notes="^Note:"></section>
+    </div>
+  </div>
+  <script type="module">
+    import Reveal from './node_modules/reveal.js/dist/reveal.esm.js';
+    import Markdown from './node_modules/reveal.js/plugin/markdown/markdown.esm.js';
+    import Highlight from './node_modules/reveal.js/plugin/highlight/highlight.esm.js';
+    Reveal.initialize({
+      hash: true,
+      plugins: [Markdown, Highlight],
+    });
+  </script>
+</body>
+</html>

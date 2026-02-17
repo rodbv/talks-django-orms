@@ -1,0 +1,8 @@
+{
+  "name": "django-orms-slides",
+  "private": true,
+  "description": "Reveal.js slides for Django ORM talk",
+  "dependencies": {
+    "reveal.js": "^5.2.1"
+  }
+}
