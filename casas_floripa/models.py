@@ -72,3 +72,41 @@ class Produto(ModelBase):
 
     def __str__(self):
         return self.nome
+
+
+class Pedido(ModelBase):
+    class StatusPedido(models.TextChoices):
+        ABERTO = "aberto", "Aberto"
+        FECHADO = "fechado", "Fechado"
+        CANCELADO = "cancelado", "Cancelado"
+
+    cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
+    status = models.CharField(
+        max_length=10,
+        choices=StatusPedido.choices,
+        default=StatusPedido.ABERTO,
+    )
+    desconto_pct = models.DecimalField(max_digits=5, decimal_places=2, default=0)
+    data_entrega = models.DateField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = "pedido"
+        verbose_name_plural = "pedidos"
+        ordering = ["-data_criacao"]
+
+    def __str__(self):
+        return f"Pedido {self.id} - {self.cliente}"
+
+
+class ItemPedido(ModelBase):
+    pedido = models.ForeignKey(Pedido, on_delete=models.CASCADE, related_name="itens")
+    produto = models.ForeignKey(Produto, on_delete=models.PROTECT)
+    quantidade = models.PositiveIntegerField()
+    preco_venda = models.DecimalField(max_digits=10, decimal_places=2)
+
+    class Meta:
+        verbose_name = "item do pedido"
+        verbose_name_plural = "itens do pedido"
+
+    def __str__(self):
+        return f"{self.quantidade}x {self.produto.nome}"
