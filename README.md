@@ -4,6 +4,7 @@ Slides and demo app for a talk on avoiding common Django ORM performance mistake
 
 ## Slides
 
+- **Live:** [https://rodbv.github.io/talks-django-orms/](https://rodbv.github.io/talks-django-orms/)
 - **Local:** `just slides` then open the URL (e.g. http://localhost:3000).
 - **GitHub Pages:** On push to `main`, the [Slides workflow](.github/workflows/slides.yml) tests the slides and deploys them. Enable in the repo: **Settings → Pages → Build and deployment → Source:** choose **GitHub Actions**. The site will be at `https://<user>.github.io/<repo>/`.
 

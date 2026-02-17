@@ -6,8 +6,10 @@ name: Slides
 on:
   push:
     branches: [main]
+    paths: ["slides/**"]
   pull_request:
     branches: [main]
+    paths: ["slides/**"]
 
 permissions:
   contents: read
