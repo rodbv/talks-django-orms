@@ -1,27 +1,47 @@
-# Django ORM — performance
+# ORMs com Python
 
-Evitando os erros mais comuns
+Evitando os erros mais comuns.
 
----
-
-## O que vamos ver
-
-- **N+1:** muitas queries onde poucas bastariam
-- **SELECT \*** e **only():** trazer só o que a view usa
-- **Cálculo no banco:** `Sum()`, `Count()` em vez de Python
-- **Índices:** EXPLAIN e quando criar índice
-- **Regressão:** assertNumQueries e DTO para não quebrar
+<div style="display: flex; justify-content: space-between; margin-top: 2em; font-size: 0.7em; color: #888;">
+  <span>Python Floripa 92</span>
+  <span>rodrigo.vieira@gmail.com</span>
+</div>
 
 ---
 
-## Exemplo de código
+## O que são ORMs?
+
+**ORM** = _Object-Relational Mapper_: mapeia objetos Python ↔ tabelas/linhas no banco
+
+**Modelo (classe):**
 
 ```python
-# Sem otimização: 1 + N + N queries
-pedidos = Pedido.objects.all()[:100]
-for pedido in pedidos:
-    print(pedido.cliente)      # N+1
-    print(pedido.valor_total)   # N+1 (property usa itens.all())
+class Produto(ModelBase):
+    nome = models.CharField(max_length=200)
+    descricao = models.TextField()
+    codigo_fabricante = models.CharField(max_length=50)
+    preco = models.DecimalField(max_digits=10, decimal_places=2)
+    # ...
 ```
 
-**Com select_related + prefetch_related:** 3 queries no total.
+---
+
+## O que são ORMs?
+
+Consultas feitas em notação orientada a objetos...
+
+```python
+from datetime import date
+Produto.objects.filter(
+  preco__lte=100,
+  data_criacao__gte=date(2026, 1, 1)
+)
+```
+
+<div class="fragment">
+<p>..viram consultas SQL em tempo de execução</p>
+<pre><code class="language-sql" data-trim>SELECT "id","nome","descricao","preco"
+FROM "casas_floripa_produto"
+WHERE ("preco" <= 100
+       AND "data_criacao" >= '2026-01-01 00:00:00')</code></pre>
+</div>

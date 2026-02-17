@@ -19,6 +19,10 @@ test:
 slides:
     cd slides && npx serve .
 
+# Servir os slides com hot reload (recarrega ao editar slides.md ou index.html)
+slides-watch:
+    cd slides && npx live-server . --port=3000 --no-browser
+
 # Compactar o banco SQLite (rodar após limpar dados do Silk)
 vacuum:
     uv run python manage.py shell -c "import sqlite3; from django.conf import settings; conn = sqlite3.connect(settings.DATABASES['default']['NAME']); conn.execute('VACUUM'); conn.close(); print('VACUUM done')"
