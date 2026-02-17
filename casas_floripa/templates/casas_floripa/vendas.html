@@ -12,8 +12,6 @@
     .badge-aberto { background-color: #ffc107; color: #000; }
     .badge-fechado { background-color: #198754; }
     .badge-cancelado { background-color: #dc3545; }
-    .itens-list { list-style: none; padding-left: 0; margin-bottom: 0; }
-    .itens-list li { white-space: nowrap; }
     @media print {
       .no-print { display: none; }
       body { font-size: 0.7rem; }
@@ -30,7 +28,7 @@
       <div class="no-print">
         <span class="text-muted me-3">{{ pedidos|length }} pedidos</span>
         <span class="badge bg-dark mono me-2">__TEMPO__s</span>
-        <a href="/silk/" class="text-muted small" target="_blank">silk</a>
+        <span class="text-muted small">Debug Toolbar →</span>
       </div>
     </div>
 
@@ -40,7 +38,6 @@
           <th>Pedido</th>
           <th>Cliente</th>
           <th>Status</th>
-          <th>Itens</th>
           <th class="text-end">Valor Total</th>
           <th class="text-end">Desconto</th>
           <th>Data Entrega</th>
@@ -54,13 +51,6 @@
           <td>{{ pedido.cliente }}</td>
           <td>
             <span class="badge badge-{{ pedido.status }}">{{ pedido.get_status_display }}</span>
-          </td>
-          <td>
-            <ul class="itens-list">
-              {% for item in pedido.itens.all %}
-              <li>{{ item.quantidade }}x {{ item.produto.nome }} <span class="mono">R$ {{ item.preco_venda }}</span></li>
-              {% endfor %}
-            </ul>
           </td>
           <td class="text-end mono">R$ {{ pedido.valor_total }}</td>
           <td class="text-end mono">{{ pedido.desconto_pct }}%</td>
