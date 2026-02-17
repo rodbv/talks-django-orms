@@ -17,6 +17,6 @@ def vendas(request):
                 break
         pedidos = Pedido.objects.all()[:limit]
     response = render(request, "casas_floripa/vendas.html", {"pedidos": pedidos})
-    tempo = f"{time.monotonic() - inicio:.1f}".replace(".", ",")
+    tempo = f"{time.monotonic() - inicio:.2f}".replace(".", ",")
     response.content = response.content.replace(b"__TEMPO__", tempo.encode())
     return response

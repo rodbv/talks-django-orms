@@ -45,3 +45,9 @@ FROM "casas_floripa_produto"
 WHERE ("preco" <= 100
        AND "data_criacao" >= '2026-01-01 00:00:00')</code></pre>
 </div>
+
+---
+
+## Vamos criar um relatório de vendas
+
+<a href="http://localhost:8000/vendas/" target="_blank" rel="noopener noreferrer">Relatório de vendas</a>
