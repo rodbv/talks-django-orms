@@ -37,7 +37,7 @@ jobs:
       - name: Verify slides load
         run: |
           cd slides && npx serve . -l 3000 &
-          sleep 3
+          sleep 2
           curl -sf -o /dev/null http://localhost:3000/ || (echo "Slides failed to serve" && exit 1)
           kill %1 2>/dev/null || true
 
