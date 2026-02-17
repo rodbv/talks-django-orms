@@ -68,9 +68,9 @@ def run():
         else:
             desconto_pct = Decimal(str(random.randint(5, 15)))
 
-        # Data de criação: nos últimos 365 dias
-        dias_atras = random.randint(0, 365)
-        data_criacao = now - timedelta(days=dias_atras)
+        # Data de criação: nos últimos 365 dias, hora/minuto aleatórios
+        segundos_atras = random.randint(0, 365 * 24 * 3600)
+        data_criacao = now - timedelta(seconds=segundos_atras)
 
         # Data de entrega: apenas para pedidos fechados
         data_entrega = None
