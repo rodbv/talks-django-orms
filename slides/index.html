@@ -26,6 +26,17 @@
     Reveal.initialize({
       hash: true,
       plugins: [Markdown, Highlight],
+    }).then(() => {
+      function addLineNumbers() {
+        document.querySelectorAll('.reveal pre code').forEach((el) => {
+          if (el.hasAttribute('data-line-numbers')) return;
+          el.setAttribute('data-line-numbers', '');
+          const highlight = Reveal.getPlugin('highlight');
+          if (highlight && highlight.highlightBlock) highlight.highlightBlock(el);
+        });
+      }
+      addLineNumbers();
+      setTimeout(addLineNumbers, 400);
     });
   </script>
 </body>
