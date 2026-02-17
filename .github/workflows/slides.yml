@@ -6,10 +6,10 @@ name: Slides
 on:
   push:
     branches: [main]
-    paths: ["slides/**"]
+    paths: ["slides/**", ".github/workflows/slides.yml"]
   pull_request:
     branches: [main]
-    paths: ["slides/**"]
+    paths: ["slides/**", ".github/workflows/slides.yml"]
 
 permissions:
   contents: read
