@@ -9,3 +9,9 @@ dependencies = [
     "django-browser-reload>=1.21.0",
     "django-silk>=5.4.3",
 ]
+
+[dependency-groups]
+dev = [
+    "pre-commit>=4.5.1",
+    "ruff>=0.15.1",
+]
