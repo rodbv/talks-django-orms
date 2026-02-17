@@ -17,3 +17,22 @@ class Usuario(ModelBase, AbstractUser):
     class Meta:
         verbose_name = "usuário"
         verbose_name_plural = "usuários"
+
+
+class Cliente(Usuario):
+    class StatusFinanceiro(models.TextChoices):
+        REGULAR = "regular", "Regular"
+        PENDENTE = "pendente", "Pendente"
+        BLOQUEADO = "bloqueado", "Bloqueado"
+
+    data_nascimento = models.DateField(null=True, blank=True)
+    celular = models.CharField(max_length=20)
+    status_financeiro = models.CharField(
+        max_length=10,
+        choices=StatusFinanceiro.choices,
+        default=StatusFinanceiro.REGULAR,
+    )
+
+    class Meta:
+        verbose_name = "cliente"
+        verbose_name_plural = "clientes"
