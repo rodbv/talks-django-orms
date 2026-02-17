@@ -1,15 +1,12 @@
+# Rodar o servidor
 run:
     uv run python manage.py runserver
 
-test:
-    uv run python manage.py test
-
+# Criar migrações e aplicar
 mmm:
     uv run python manage.py makemigrations
     uv run python manage.py migrate
 
-shell:
-    uv run python manage.py shell
-
-createsuperuser:
-    uv run python manage.py createsuperuser
+# Rodar todos os seeds
+seed:
+    uv run python manage.py seed

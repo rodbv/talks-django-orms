@@ -1,6 +1,6 @@
 """
 Seed script para criar 500 pedidos com itens variados.
-Uso: uv run python manage.py shell < seeds/seed_pedidos.py
+Uso: uv run python manage.py shell < seeds/0030_seed_pedidos.py
 
 ATENÇÃO: este script deleta todos os pedidos/itens existentes antes de recriar,
 pois pedidos não têm chave natural fácil para get_or_create.
@@ -16,7 +16,7 @@ from casas_floripa.models import Cliente, ItemPedido, Pedido, Produto
 
 random.seed(42)
 
-NUM_PEDIDOS = 500
+NUM_PEDIDOS = 1000
 
 
 def _sortear_quantidade():

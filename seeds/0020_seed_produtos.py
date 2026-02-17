@@ -1,6 +1,6 @@
 """
 Seed script para criar categorias e 90 produtos.
-Uso: uv run python manage.py shell < seeds/seed_produtos.py
+Uso: uv run python manage.py shell < seeds/0020_seed_produtos.py
 """
 
 from decimal import Decimal

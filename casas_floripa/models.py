@@ -1,4 +1,3 @@
-import uuid
 from decimal import Decimal
 
 from django.contrib.auth.models import AbstractUser
@@ -6,7 +5,6 @@ from django.db import models
 
 
 class ModelBase(models.Model):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     data_criacao = models.DateTimeField(auto_now_add=True)
     data_atualizacao = models.DateTimeField(auto_now=True)
 

@@ -1,6 +1,6 @@
 """
 Seed script para criar 130 clientes.
-Uso: uv run python manage.py shell < seeds/seed_clientes.py
+Uso: uv run python manage.py shell < seeds/0010_seed_clientes.py
 """
 
 import random
