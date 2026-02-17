@@ -1,4 +1,5 @@
 import uuid
+from decimal import Decimal
 
 from django.contrib.auth.models import AbstractUser
 from django.db import models
@@ -93,6 +94,15 @@ class Pedido(ModelBase):
         verbose_name = "pedido"
         verbose_name_plural = "pedidos"
         ordering = ["-data_criacao"]
+
+    @property
+    def valor_total(self):
+        total = sum(
+            item.preco_venda * item.quantidade for item in self.itens.all()
+        )
+        if self.desconto_pct:
+            total *= 1 - self.desconto_pct / Decimal("100")
+        return total.quantize(Decimal("0.01"))
 
     def __str__(self):
         return f"Pedido {self.id} - {self.cliente}"
