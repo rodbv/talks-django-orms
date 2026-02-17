@@ -63,6 +63,10 @@ jobs:
       - name: Install slides dependencies
         run: cd slides && npm ci
 
+      - name: Cache-bust slides.md (evita ver conteúdo antigo em cache)
+        run: |
+          sed -i "s|data-markdown=\"slides.md\"|data-markdown=\"slides.md?v=${{ github.sha }}\"|" slides/index.html
+
       - name: Upload Pages artifact
         id: deployment
         uses: actions/upload-pages-artifact@v3
