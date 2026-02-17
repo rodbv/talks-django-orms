@@ -1,5 +1,5 @@
 """
-Seed script para criar categorias e ~40 produtos de eletrodomésticos.
+Seed script para criar categorias e 90 produtos.
 Uso: uv run python manage.py shell < seeds/seed_produtos.py
 """
 
@@ -14,6 +14,7 @@ CATEGORIAS = [
     "Lavanderia",
     "Climatização",
     "Áudio e Vídeo",
+    "Geek e Nerd",
 ]
 
 PRODUTOS = [
@@ -64,28 +65,94 @@ PRODUTOS = [
     {"nome": "Umidificador de Ar 3L", "descricao": "Umidificador ultrassônico 3 litros, operação silenciosa, até 12h de autonomia.", "codigo_fabricante": "UMD-3L-BC", "preco": Decimal("179.90"), "quantidade_estoque": 25, "categoria": None},
     {"nome": "Espremedor de Frutas Elétrico", "descricao": "Espremedor de frutas elétrico com jarra de 1L, dupla rotação e cone universal.", "codigo_fabricante": "ESP-FRT-1L", "preco": Decimal("89.90"), "quantidade_estoque": 33, "categoria": None},
     {"nome": "Grill Elétrico 2000W", "descricao": "Grill elétrico 2000W com placas antiaderentes removíveis e coletor de gordura.", "codigo_fabricante": "GRL-2000-PT", "preco": Decimal("299.90"), "quantidade_estoque": 21, "categoria": None},
+    # Geek e Nerd
+    {"nome": "Console PlayStation 5", "descricao": "Console PlayStation 5 com leitor de disco, controle DualSense, SSD 825GB.", "codigo_fabricante": "GK-PS5-DSC", "preco": Decimal("4499.00"), "quantidade_estoque": 6, "categoria": "Geek e Nerd"},
+    {"nome": "Console Xbox Series X", "descricao": "Console Xbox Series X 1TB, 4K a 120fps, retrocompatível com milhares de jogos.", "codigo_fabricante": "GK-XBSX-1TB", "preco": Decimal("4299.00"), "quantidade_estoque": 5, "categoria": "Geek e Nerd"},
+    {"nome": "Console Nintendo Switch OLED", "descricao": "Nintendo Switch modelo OLED com tela de 7 polegadas, dock e Joy-Con.", "codigo_fabricante": "GK-NSW-OLED", "preco": Decimal("2499.00"), "quantidade_estoque": 10, "categoria": "Geek e Nerd"},
+    {"nome": "Headset Gamer 7.1 Surround", "descricao": "Headset gamer com som surround 7.1 virtual, microfone retrátil, RGB e almofadas memory foam.", "codigo_fabricante": "GK-HSG-71S", "preco": Decimal("399.90"), "quantidade_estoque": 25, "categoria": "Geek e Nerd"},
+    {"nome": "Teclado Mecânico RGB", "descricao": "Teclado mecânico gamer com switches blue, iluminação RGB por tecla, layout ABNT2.", "codigo_fabricante": "GK-TEC-MRGB", "preco": Decimal("349.90"), "quantidade_estoque": 30, "categoria": "Geek e Nerd"},
+    {"nome": "Mouse Gamer 16000 DPI", "descricao": "Mouse gamer óptico com sensor de 16000 DPI, 8 botões programáveis e peso ajustável.", "codigo_fabricante": "GK-MOU-16K", "preco": Decimal("249.90"), "quantidade_estoque": 35, "categoria": "Geek e Nerd"},
+    {"nome": "Mousepad Gamer XL 90x40cm", "descricao": "Mousepad gamer extra grande 90x40cm com base antiderrapante e borda costurada.", "codigo_fabricante": "GK-MPD-XL90", "preco": Decimal("89.90"), "quantidade_estoque": 50, "categoria": "Geek e Nerd"},
+    {"nome": "Monitor Gamer 27\" 165Hz", "descricao": "Monitor gamer 27 polegadas IPS, 165Hz, 1ms, QHD 2560x1440, FreeSync e G-Sync.", "codigo_fabricante": "GK-MON-27QH", "preco": Decimal("2299.00"), "quantidade_estoque": 8, "categoria": "Geek e Nerd"},
+    {"nome": "Monitor Gamer 24\" 144Hz", "descricao": "Monitor gamer 24 polegadas Full HD, 144Hz, 1ms, painel VA, entrada HDMI e DisplayPort.", "codigo_fabricante": "GK-MON-24FH", "preco": Decimal("1199.00"), "quantidade_estoque": 14, "categoria": "Geek e Nerd"},
+    {"nome": "Cadeira Gamer Reclinável", "descricao": "Cadeira gamer com encosto reclinável até 180°, apoio de braço 4D, almofadas lombar e cervical.", "codigo_fabricante": "GK-CDR-180R", "preco": Decimal("1599.00"), "quantidade_estoque": 9, "categoria": "Geek e Nerd"},
+    {"nome": "Webcam Full HD 1080p", "descricao": "Webcam Full HD 1080p com microfone duplo, autofoco e correção de luz.", "codigo_fabricante": "GK-WCM-1080", "preco": Decimal("299.90"), "quantidade_estoque": 20, "categoria": "Geek e Nerd"},
+    {"nome": "Placa de Captura HDMI 4K", "descricao": "Placa de captura externa HDMI 4K para streaming, USB 3.0, compatível com OBS.", "codigo_fabricante": "GK-CAP-4K", "preco": Decimal("899.90"), "quantidade_estoque": 7, "categoria": "Geek e Nerd"},
+    {"nome": "Ring Light 26cm com Tripé", "descricao": "Ring light LED 26cm com tripé ajustável de 2m, 3 modos de luz e suporte para celular.", "codigo_fabricante": "GK-RGL-26CM", "preco": Decimal("129.90"), "quantidade_estoque": 22, "categoria": "Geek e Nerd"},
+    {"nome": "Controle Pro para Switch", "descricao": "Controle Pro sem fio para Nintendo Switch com NFC, giroscópio e bateria de 40h.", "codigo_fabricante": "GK-CTR-SWPR", "preco": Decimal("349.90"), "quantidade_estoque": 15, "categoria": "Geek e Nerd"},
+    {"nome": "Volante com Pedais Force Feedback", "descricao": "Volante gamer com force feedback, pedais e câmbio, compatível com PC, PS5 e Xbox.", "codigo_fabricante": "GK-VOL-FFB", "preco": Decimal("1899.00"), "quantidade_estoque": 4, "categoria": "Geek e Nerd"},
+    {"nome": "Deck de Streaming 15 Teclas", "descricao": "Stream deck com 15 teclas LCD customizáveis para controle de lives e automação.", "codigo_fabricante": "GK-SDK-15T", "preco": Decimal("999.90"), "quantidade_estoque": 11, "categoria": "Geek e Nerd"},
+    {"nome": "Microfone Condensador USB", "descricao": "Microfone condensador USB cardioide para podcast e streaming, com botão de mute e ganho.", "codigo_fabricante": "GK-MIC-CUSB", "preco": Decimal("499.90"), "quantidade_estoque": 18, "categoria": "Geek e Nerd"},
+    {"nome": "Luminária de Mesa LED Darth Vader", "descricao": "Luminária de mesa temática Star Wars Darth Vader, LED com 3 intensidades, USB.", "codigo_fabricante": "GK-LUM-DVDR", "preco": Decimal("189.90"), "quantidade_estoque": 13, "categoria": "Geek e Nerd"},
+    {"nome": "Caneca Térmica Gamer 450ml", "descricao": "Caneca térmica gamer 450ml em aço inox com tampa deslizante e estampa pixel art.", "codigo_fabricante": "GK-CNC-450G", "preco": Decimal("69.90"), "quantidade_estoque": 60, "categoria": "Geek e Nerd"},
+    # Mais Cozinha
+    {"nome": "Cooktop Indução 4 Bocas", "descricao": "Cooktop por indução 4 zonas com painel touch, timer individual e trava de segurança.", "codigo_fabricante": "CKT-IND-4B", "preco": Decimal("2899.00"), "quantidade_estoque": 7, "categoria": "Cozinha"},
+    {"nome": "Adega Climatizada 12 Garrafas", "descricao": "Adega climatizada para 12 garrafas com controle digital de temperatura e luz interna LED.", "codigo_fabricante": "ADG-12G-PT", "preco": Decimal("1099.00"), "quantidade_estoque": 9, "categoria": "Cozinha"},
+    {"nome": "Freezer Vertical 246L", "descricao": "Freezer vertical 246 litros com degelo automático e 7 gavetas transparentes.", "codigo_fabricante": "FRZ-VER-246", "preco": Decimal("2899.90"), "quantidade_estoque": 5, "categoria": "Cozinha"},
+    {"nome": "Coifa de Parede 90cm", "descricao": "Coifa de parede 90cm em inox com 3 velocidades, filtro de alumínio lavável e iluminação.", "codigo_fabricante": "COI-PAR-90I", "preco": Decimal("1799.00"), "quantidade_estoque": 6, "categoria": "Cozinha"},
+    {"nome": "Processador de Alimentos 800W", "descricao": "Processador de alimentos 800W com 3 discos, lâmina inox e copo de 3.1L.", "codigo_fabricante": "PRC-ALM-800", "preco": Decimal("399.90"), "quantidade_estoque": 17, "categoria": "Cozinha"},
+    # Mais Eletrônico
+    {"nome": "Notebook Gamer 15.6\" RTX 4060", "descricao": "Notebook gamer 15.6\", Intel Core i7, 16GB RAM, SSD 512GB, RTX 4060, tela 144Hz.", "codigo_fabricante": "NTB-GM-4060", "preco": Decimal("7499.00"), "quantidade_estoque": 4, "categoria": "Eletrônico"},
+    {"nome": "Monitor Ultrawide 34\" Curvo", "descricao": "Monitor ultrawide 34 polegadas curvo, UWQHD 3440x1440, 100Hz, USB-C com PD 65W.", "codigo_fabricante": "MON-UW34-CV", "preco": Decimal("3299.00"), "quantidade_estoque": 5, "categoria": "Eletrônico"},
+    {"nome": "Roteador Wi-Fi 6 Mesh", "descricao": "Sistema mesh Wi-Fi 6 com 2 unidades, cobertura de até 350m², 5400Mbps.", "codigo_fabricante": "ROT-WF6-MSH", "preco": Decimal("1299.00"), "quantidade_estoque": 12, "categoria": "Eletrônico"},
+    {"nome": "HD Externo 2TB USB 3.0", "descricao": "HD externo portátil 2TB USB 3.0 com backup automático e proteção por senha.", "codigo_fabricante": "HDE-2TB-U30", "preco": Decimal("449.90"), "quantidade_estoque": 22, "categoria": "Eletrônico"},
+    {"nome": "SSD Externo 1TB NVMe", "descricao": "SSD externo 1TB NVMe com velocidade de leitura de 1050MB/s, USB-C, compacto.", "codigo_fabricante": "SSD-EXT-1TB", "preco": Decimal("699.90"), "quantidade_estoque": 15, "categoria": "Eletrônico"},
+    {"nome": "Smartwatch com GPS", "descricao": "Smartwatch com GPS integrado, monitor cardíaco, SpO2, tela AMOLED e 7 dias de bateria.", "codigo_fabricante": "SWT-GPS-AMO", "preco": Decimal("1199.00"), "quantidade_estoque": 18, "categoria": "Eletrônico"},
+    # Mais Eletrodoméstico
+    {"nome": "Robô Aspirador e Passa Pano", "descricao": "Robô aspirador e passa pano 2 em 1, navegação inteligente, base autoesvaziante.", "codigo_fabricante": "ASP-ROBO-PP", "preco": Decimal("3499.00"), "quantidade_estoque": 5, "categoria": "Eletrodoméstico"},
+    {"nome": "Vaporizador de Roupas Portátil", "descricao": "Vaporizador de roupas portátil 1500W, aquece em 25s, reservatório de 300ml.", "codigo_fabricante": "VAP-ROP-15W", "preco": Decimal("199.90"), "quantidade_estoque": 24, "categoria": "Eletrodoméstico"},
+    {"nome": "Máquina de Gelo 15kg/dia", "descricao": "Máquina de gelo portátil com produção de 15kg/dia, 2 tamanhos de gelo, inox.", "codigo_fabricante": "MGE-15K-INX", "preco": Decimal("1499.00"), "quantidade_estoque": 8, "categoria": "Eletrodoméstico"},
+    # Mais Áudio e Vídeo
+    {"nome": "Projetor Full HD 6000 Lumens", "descricao": "Projetor Full HD nativo, 6000 lumens, contraste 10000:1, HDMI, tela até 300 polegadas.", "codigo_fabricante": "PRJ-FHD-6KL", "preco": Decimal("3199.00"), "quantidade_estoque": 4, "categoria": "Áudio e Vídeo"},
+    {"nome": "Fone de Ouvido Bluetooth ANC", "descricao": "Fone de ouvido over-ear Bluetooth 5.3 com cancelamento ativo de ruído, 30h de bateria.", "codigo_fabricante": "FON-BT-ANC", "preco": Decimal("599.90"), "quantidade_estoque": 22, "categoria": "Áudio e Vídeo"},
+    {"nome": "Receiver AV 5.1 Canais", "descricao": "Receiver AV 5.1 canais com 100W por canal, Bluetooth, HDMI ARC e Dolby Digital.", "codigo_fabricante": "RCV-51-100W", "preco": Decimal("2499.00"), "quantidade_estoque": 3, "categoria": "Áudio e Vídeo"},
+    {"nome": "Toca-Discos de Vinil Retrô", "descricao": "Toca-discos de vinil com design retrô, caixas de som embutidas, Bluetooth e saída RCA.", "codigo_fabricante": "TDV-RETRO-BT", "preco": Decimal("699.90"), "quantidade_estoque": 10, "categoria": "Áudio e Vídeo"},
+    # Mais Climatização
+    {"nome": "Ar-Condicionado Portátil 12000 BTUs", "descricao": "Ar-condicionado portátil 12000 BTUs, sem instalação, controle remoto e timer.", "codigo_fabricante": "ARC-PORT-12K", "preco": Decimal("2999.00"), "quantidade_estoque": 6, "categoria": "Climatização"},
+    {"nome": "Climatizador Evaporativo 7L", "descricao": "Climatizador evaporativo 7 litros com 3 velocidades, função umidificar e ionizar.", "codigo_fabricante": "CLM-EVP-7L", "preco": Decimal("549.90"), "quantidade_estoque": 14, "categoria": "Climatização"},
+    # Mais Lavanderia
+    {"nome": "Máquina de Lavar 17kg", "descricao": "Lavadora 17kg com cesto inox, dosagem inteligente de sabão e 16 programas.", "codigo_fabricante": "LAV-17KG-TI", "preco": Decimal("4599.00"), "quantidade_estoque": 4, "categoria": "Lavanderia"},
+    {"nome": "Passadeira a Vapor Vertical", "descricao": "Passadeira a vapor vertical 1800W com cabide dobrável e reservatório de 1.6L.", "codigo_fabricante": "PAS-VAP-18V", "preco": Decimal("449.90"), "quantidade_estoque": 11, "categoria": "Lavanderia"},
+    # Sem categoria
+    {"nome": "Balança Digital de Cozinha 10kg", "descricao": "Balança digital de cozinha com capacidade de 10kg, display LCD e tara automática.", "codigo_fabricante": "BAL-DIG-10K", "preco": Decimal("59.90"), "quantidade_estoque": 40, "categoria": None},
+    {"nome": "Seladora a Vácuo Doméstica", "descricao": "Seladora a vácuo para conservação de alimentos, compatível com rolos e sacos avulsos.", "codigo_fabricante": "SEL-VAC-DOM", "preco": Decimal("299.90"), "quantidade_estoque": 15, "categoria": None},
+    {"nome": "Afiador Elétrico de Facas", "descricao": "Afiador elétrico de facas com 2 estágios, guia angular e base antiderrapante.", "codigo_fabricante": "AFI-ELE-2E", "preco": Decimal("129.90"), "quantidade_estoque": 18, "categoria": None},
+    # Mais Geek e Nerd
+    {"nome": "Controle Arcade Fightstick", "descricao": "Controle arcade fightstick com botões Sanwa, compatível com PC e consoles, cabo de 3m.", "codigo_fabricante": "GK-ARC-FSK", "preco": Decimal("799.90"), "quantidade_estoque": 6, "categoria": "Geek e Nerd"},
+    {"nome": "Mini PC Gamer Ryzen 7", "descricao": "Mini PC gamer AMD Ryzen 7, 16GB RAM, SSD 512GB, Radeon integrada, Wi-Fi 6E.", "codigo_fabricante": "GK-MPC-RZ7", "preco": Decimal("4299.00"), "quantidade_estoque": 5, "categoria": "Geek e Nerd"},
+    {"nome": "Base Cooler para Notebook RGB", "descricao": "Base cooler para notebook até 17\" com 5 ventoinhas, iluminação RGB e altura ajustável.", "codigo_fabricante": "GK-BCN-RGB", "preco": Decimal("159.90"), "quantidade_estoque": 28, "categoria": "Geek e Nerd"},
+    {"nome": "Hub USB-C 9 em 1", "descricao": "Hub USB-C 9 em 1 com HDMI 4K, 3x USB 3.0, leitor SD/microSD, Ethernet e PD 100W.", "codigo_fabricante": "GK-HUB-9E1", "preco": Decimal("279.90"), "quantidade_estoque": 19, "categoria": "Geek e Nerd"},
+    {"nome": "Óculos de Realidade Virtual", "descricao": "Headset de realidade virtual standalone com tela 4K, tracking 6DoF e 128GB.", "codigo_fabricante": "GK-VR-4K128", "preco": Decimal("3499.00"), "quantidade_estoque": 3, "categoria": "Geek e Nerd"},
+    {"nome": "Drone com Câmera 4K", "descricao": "Drone com câmera 4K estabilizada em 3 eixos, alcance de 10km, 30min de voo e GPS.", "codigo_fabricante": "GK-DRN-4KGP", "preco": Decimal("5999.00"), "quantidade_estoque": 2, "categoria": "Geek e Nerd"},
 ]
 
 
 def run():
-    Produto.objects.all().delete()
-    Categoria.objects.all().delete()
-    print("Produtos e categorias existentes removidos.")
-
     categorias = {}
+    cat_created = 0
     for nome in CATEGORIAS:
-        categorias[nome] = Categoria.objects.create(nome=nome)
-    print(f"Criadas {len(categorias)} categorias.")
+        cat, created = Categoria.objects.get_or_create(nome=nome)
+        categorias[nome] = cat
+        if created:
+            cat_created += 1
+    print(f"Categorias: {cat_created} criadas, {len(CATEGORIAS) - cat_created} já existiam.")
 
-    created = 0
+    prod_created = 0
+    prod_existing = 0
     for dados in PRODUTOS:
         cat_nome = dados.pop("categoria")
         dados["categoria"] = categorias[cat_nome] if cat_nome else None
         dados["url_imagem"] = f"https://placehold.co/400x400?text={dados['codigo_fabricante']}"
-        Produto.objects.create(**dados)
-        created += 1
+        _, created = Produto.objects.get_or_create(
+            codigo_fabricante=dados.pop("codigo_fabricante"),
+            defaults=dados,
+        )
+        if created:
+            prod_created += 1
+        else:
+            prod_existing += 1
 
-    print(f"Criados {created} produtos. Total: {Produto.objects.count()}")
+    print(f"Produtos: {prod_created} criados, {prod_existing} já existiam. Total: {Produto.objects.count()}")
 
 
 run()

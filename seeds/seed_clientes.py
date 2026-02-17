@@ -159,16 +159,20 @@ def gerar_email(nome, sobrenome):
 
 
 def run():
-    Cliente.objects.all().delete()
-    print("Clientes existentes removidos.")
-
-    created = 0
+    created_count = 0
+    existing_count = 0
     for dados in CLIENTES:
-        dados["email"] = gerar_email(dados["nome"], dados["sobrenome"])
-        Cliente.objects.create(**dados)
-        created += 1
+        email = gerar_email(dados["nome"], dados["sobrenome"])
+        _, created = Cliente.objects.get_or_create(
+            email=email,
+            defaults={**dados, "email": email},
+        )
+        if created:
+            created_count += 1
+        else:
+            existing_count += 1
 
-    print(f"Criados {created} clientes. Total: {Cliente.objects.count()}")
+    print(f"Clientes: {created_count} criados, {existing_count} já existiam. Total: {Cliente.objects.count()}")
 
 
 run()
