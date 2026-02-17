@@ -95,9 +95,8 @@ class Pedido(ModelBase):
 
     @property
     def valor_total(self):
-        total = sum(
-            item.preco_venda * item.quantidade for item in self.itens.all()
-        )
+        total = sum(item.preco_venda * item.quantidade for item in self.itens.all())
+        total = Decimal(total)
         if self.desconto_pct:
             total *= 1 - self.desconto_pct / Decimal("100")
         return total.quantize(Decimal("0.01"))

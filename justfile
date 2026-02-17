@@ -11,6 +11,10 @@ mmm:
 seed:
     uv run python manage.py seed
 
+# Rodar testes (pytest)
+test:
+    uv run --group dev pytest
+
 # Servir os slides (Reveal.js). Abra a URL que aparecer (ex.: http://localhost:3000)
 slides:
     cd slides && npx serve .
