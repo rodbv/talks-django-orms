@@ -42,3 +42,33 @@ class Cliente(ModelBase):
 
     def __str__(self):
         return f"{self.nome} {self.sobrenome}"
+
+
+class Categoria(ModelBase):
+    nome = models.CharField(max_length=100)
+
+    class Meta:
+        verbose_name = "categoria"
+        verbose_name_plural = "categorias"
+
+    def __str__(self):
+        return self.nome
+
+
+class Produto(ModelBase):
+    nome = models.CharField(max_length=200)
+    descricao = models.TextField()
+    codigo_fabricante = models.CharField(max_length=50)
+    preco = models.DecimalField(max_digits=10, decimal_places=2)
+    quantidade_estoque = models.PositiveIntegerField()
+    url_imagem = models.URLField(blank=True)
+    categoria = models.ForeignKey(
+        Categoria, on_delete=models.SET_NULL, null=True, blank=True
+    )
+
+    class Meta:
+        verbose_name = "produto"
+        verbose_name_plural = "produtos"
+
+    def __str__(self):
+        return self.nome
