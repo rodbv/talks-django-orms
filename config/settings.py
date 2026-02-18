@@ -17,13 +17,30 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Profiling: SILK=TRUE → Silk; DDT=TRUE → Django Debug Toolbar; nenhum → sem toolbar
+# Profiling: default = Silk; DDT=TRUE → Django Debug Toolbar (no Silk)
 def _env_true(name: str) -> bool:
     return os.environ.get(name, "").upper() in ("TRUE", "1", "YES")
 
 
-USE_SILK = _env_true("SILK")
 USE_DDT = _env_true("DDT")
+USE_SILK = not USE_DDT
+
+if USE_SILK:
+    SILKY_PYTHON_PROFILER = False  # keep Silk request/SQL recording only; no cProfile
+    SILKY_META = (
+        True  # mostra tempo que o Silk leva para salvar (impacto do próprio Silk)
+    )
+    # SILKY_STORAGE still needed for Silk internals
+    from django.conf.global_settings import STORAGES as _DEFAULT_STORAGES
+
+    STORAGES = {
+        **_DEFAULT_STORAGES,
+        "SILKY_STORAGE": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+            "OPTIONS": {},
+            "LOCATION": str(BASE_DIR / "silk_profiles"),
+        },
+    }
 
 
 # Quick-start development settings - unsuitable for production

@@ -117,12 +117,5 @@ def run():
         count = sum(1 for p in pedidos_objs if p.status == status_choice.value)
         print(f"  - {status_choice.label}: {count}")
 
-    # Fake vector embedding (mesmo padrão de Produto/Cliente; útil para demo de .only())
-    fake_vector = (
-        "[" + ",".join(str(round(random.uniform(-1, 1), 6)) for _ in range(1536)) + "]"
-    )
-    n = Pedido.objects.all().update(vector_embedding=fake_vector)
-    print(f"Vector embedding (fake) atualizado em {n} pedidos.")
-
 
 run()
