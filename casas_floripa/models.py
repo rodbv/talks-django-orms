@@ -34,6 +34,7 @@ class Cliente(ModelBase):
         choices=StatusFinanceiro.choices,
         default=StatusFinanceiro.REGULAR,
     )
+    vector_embedding = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name = "cliente"
@@ -64,6 +65,7 @@ class Produto(ModelBase):
     categoria = models.ForeignKey(
         Categoria, on_delete=models.SET_NULL, null=True, blank=True
     )
+    vector_embedding = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name = "produto"
