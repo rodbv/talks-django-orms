@@ -325,6 +325,12 @@ ORDER BY "pedido"."data_criacao" DESC
 
 ---
 
-### Valeu banquinho!
+### Valeu banquinho! Tô pagando pra isso
 
 <img src="images/0006-annotate.png" data-preview-image>
+
+---
+
+### Como sair desse jogo de gato-e-rato?
+
+<img  data-preview-image src="images/0007-whack-a-mole.png">
