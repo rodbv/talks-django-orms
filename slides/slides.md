@@ -280,7 +280,7 @@ def valor_total(self):
 
 ### Campos calculados com annotate()
 
-```python
+```python[11-15]
 def vendas(request):
   pedidos = (
     Pedido.objects.order_by("-data_criacao")
@@ -328,6 +328,14 @@ ORDER BY "pedido"."data_criacao" DESC
 ### Valeu banquinho! Tô pagando pra isso
 
 <img src="images/0006-annotate.png" data-preview-image>
+
+---
+
+### ...e tem mais!
+
+O prefetch_related também foi embora, porque ele tava sendo usado pra essa conta com os itens 🏆
+
+<img data-preview-image src="images/0006-annotate_one-query.png">
 
 ---
 
