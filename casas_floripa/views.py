@@ -4,7 +4,7 @@ from django.shortcuts import render
 
 from casas_floripa.models import Pedido
 
-DEFAULT_LIMIT = 25
+DEFAULT_LIMIT = 10
 
 
 def vendas(request):

@@ -84,3 +84,40 @@ def vendas(request):
   {% endfor %}
 </tbody>
 ```
+
+---
+
+# Por que tá meio lento? 🤔
+
+<a href="http://localhost:8000/silk" target="_blank" rel="noopener noreferrer">Silk: ferramenta de desempenho do Django</a>
+
+---
+
+# N+1
+
+<div style="font-size: 0.75em">
+
+Para cada Pedido, são feitas duas consultas extra:
+
+- Uma para dados do cliente em `pedido.cliente`
+- Outra para `self.itens.all()` em `pedido.valor_total`
+
+</div>
+
+```jinja[2,5,6]
+<tbody>
+  {% for pedido in pedidos %}
+  <tr>
+    <td>{{ pedido.id }}</td>
+    <td>{{ pedido.cliente }}</td>
+    <td>R$ {{ pedido.valor_total }}</td>
+    <td>{{ pedido.desconto_pct }}%</td>
+    <!-- ... mais colunas ... -->
+  </tr>
+  {% endfor %}
+</tbody>
+```
+
+# Como resolver?
+
+Vamos incluir os dados do cliente e os itens do pedido na consulta original
