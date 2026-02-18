@@ -16,7 +16,7 @@ from casas_floripa.models import Cliente, ItemPedido, Pedido, Produto
 
 random.seed(42)
 
-NUM_PEDIDOS = 6000  # 1000 originais + 5000 a mais
+NUM_PEDIDOS = 2000
 
 
 def _sortear_quantidade():
