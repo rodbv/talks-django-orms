@@ -51,3 +51,36 @@ WHERE ("preco" <= 100
 ## Vamos criar um relatório de vendas
 
 <a href="http://localhost:8000/vendas/" target="_blank" rel="noopener noreferrer">Relatório de vendas</a>
+
+---
+
+## Como o Django usa ORMs
+
+```python
+def vendas(request):
+    pedidos = Pedido.objects.order_by("-data_criacao")
+
+    return render(
+        request,
+        "casas_floripa/vendas.html",
+        {"pedidos": pedidos},
+    )
+```
+
+---
+
+## Como o Django usa ORMs
+
+```jinja
+<tbody>
+  {% for pedido in pedidos %}
+  <tr>
+    <td>{{ pedido.id }}</td>
+    <td>{{ pedido.cliente }}</td>
+    <td>R$ {{ pedido.valor_total }}</td>
+    <td>{{ pedido.desconto_pct }}%</td>
+    <!-- ... mais colunas ... -->
+  </tr>
+  {% endfor %}
+</tbody>
+```
