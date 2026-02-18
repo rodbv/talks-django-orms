@@ -51,7 +51,7 @@ WHERE ("preco" <= 100
 ## Vamos criar um relatório de vendas
 
 <a href="http://localhost:8000/vendas/" target="_blank" rel="noopener noreferrer">Relatório de vendas</a>
-<img class="img" src="images/0001-report-inicial.png" data-preview-image />
+<img src="images/0001-report-inicial.png" data-preview-image />
 
 ---
 
@@ -90,13 +90,13 @@ def vendas(request):
 
 ## Por que tá meio lento? 🤔
 
-<img class="img" src="images/0001-report-inicial.png" data-preview-image />
+<img src="images/0001-report-inicial.png" data-preview-image />
 
 ---
 
 #### Vamos ver as consultas ao banco de dados com <a href="http://localhost:8000/silk" target="_blank" rel="noopener noreferrer">Silk</a>
 
-<img data-preview-image class="img" src="images/0002-silk-nplusone.png" />
+<img data-preview-image src="images/0002-silk-nplusone.png" />
 
 ---
 
@@ -191,14 +191,203 @@ WHERE "itempedido"."pedido_id" IN (
 
 ### Como isso nos ajudou?
 
-<img class="img" src="images/0003-nplusone-antes-depois-report-time.png" data-preview-image >
+<img src="images/0003-nplusone-antes-depois-report-time.png" data-preview-image >
 
 ---
 
 ### Como isso nos ajudou?
 
-<img class="img" src="images/0003-nplusone-silk.png" data-preview-image>
+<img src="images/0003-nplusone-silk.png" data-preview-image>
 
 ---
 
 ### Tava tudo bem até uma feature nova aparecer
+
+```python
+class Produto(ModelBase):
+    nome = models.CharField(max_length=200)
+    descricao = models.TextField()
+    # ... mais campos ...
+
+    # campo novo para salvar o produto vetorizado
+    vector_embedding = models.TextField(blank=True, null=True)
+```
+
+---
+
+### Tava tudo bem até uma feature nova aparecer
+
+<img src="images/0004-embedding-memory.png" data-preview-image>
+
+---
+
+### Por que a memória explodiu?
+
+<img src="images/0005-embedding-query.png" data-preview-image>
+
+---
+
+### Vamos pegar apenas os valores que a gente precisa
+
+```python
+def vendas(request):
+    pedidos = (
+        Pedido.objects.order_by("-data_criacao")
+        .only(
+            "id","status","desconto_pct","data_entrega",
+            "cliente_id","cliente__nome",
+            "cliente__sobrenome",
+        )
+        .select_related("cliente")
+        .prefetch_related(
+            Prefetch(
+                "itens",
+                queryset=ItemPedido.objects.only(
+                    "pedido_id", "preco_venda", "quantidade"
+                )))
+      )
+
+    return render(request, "casas_floripa/vendas.html", {"pedidos": pedidos})
+```
+
+---
+
+### Podemos voltar pro boteco
+
+<img src="images/0005-embedding-memory.png" data-preview-image>
+
+---
+
+### Mas dá pra melhorar um pouco mais?
+
+Estamos calculando o valor total de cada pedido no Python, um a um 🥹
+
+```python
+@property
+def valor_total(self):
+    total = Decimal(
+        sum(
+            item.preco_venda * item.quantidade
+            for item in self.itens.all()
+        )
+    )
+    return total.quantize(Decimal("0.01"))
+```
+
+..e o banco de dados pode fazer essas contas pra gente
+
+---
+
+### Campos calculados com annotate()
+
+```python[11-15]
+def vendas(request):
+  pedidos = (
+    Pedido.objects.order_by("-data_criacao")
+    .only(
+      "id",
+      "status",
+      ...
+      "cliente__sobrenome",
+    )
+    .select_related("cliente")
+    .annotate(
+        valor_total_calc=Sum(
+          F("itens__preco_venda") * F("itens__quantidade")
+        )
+    )
+  )
+    ...
+```
+
+---
+
+### Valeu banquinho!
+
+```sql[7,8 ]
+SELECT "pedido"."id",
+  "pedido"."data_criacao",
+  "pedido"."cliente_id",
+  "pedido"."status",
+  "pedido"."desconto_pct",
+  "pedido"."data_entrega",
+  SUM(("itempedido"."preco_venda" * "itempedido"."quantidade"))
+      AS "valor_total_calc",
+  "cliente"."id",
+  "cliente"."nome",
+  "cliente"."sobrenome"
+FROM "pedido"
+LEFT OUTER JOIN "itempedido" ON
+  ("pedido"."id" = "itempedido"."pedido_id")
+INNER JOIN "cliente" ON ("pedido"."cliente_id" = "cliente"."id")
+ORDER BY "pedido"."data_criacao" DESC
+```
+
+---
+
+### Valeu banquinho! Tô pagando pra isso
+
+<img src="images/0006-annotate.png" data-preview-image>
+
+---
+
+### ...e tem mais!
+
+O prefetch_related também foi embora, porque ele tava sendo usado pra essa conta com os itens 🏆
+
+<img data-preview-image src="images/0006-annotate_one-query.png">
+
+---
+
+### Como sair desse jogo de gato-e-rato?
+
+<img  data-preview-image src="images/0007-whack-a-mole.png">
+
+---
+
+#### Garantindo que o N+1 não volta com django_assert_num_queries
+
+```python
+def test_vendas_render_uses_one_query(self, client, django_assert_num_queries):
+    cliente = baker.make(Cliente)
+    baker.make(Pedido, cliente=cliente, _quantity=5)
+
+    with django_assert_num_queries(1):
+        client.get("/vendas/")
+
+```
+
+---
+
+#### Enviando só o que a view precisa com values
+
+```python
+def vendas(request):
+    pedidos = (
+      Pedido.objects.order_by("-data_criacao")
+      .annotate(
+          valor_total_calc=Sum(
+              F("itens__preco_venda") * F("itens__quantidade"))
+      )
+      .values(
+          "id",
+          "status",
+          "desconto_pct",
+          "data_entrega",
+          "data_criacao",
+          "cliente__nome",
+          "cliente__sobrenome",
+          "valor_total_calc",
+      )
+    )
+
+    return render(request, "casas_floripa/vendas.html", {"pedidos": pedidos})
+```
+
+<div class="small">
+<code>values()</code> retorna um dicionário com os dados, ao invés de objetos Django.
+
+Isso nos obriga a sermos explícitos sobre exatamente o que será enviado, e economiza
+memória
+
+</div>
