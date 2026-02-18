@@ -224,3 +224,34 @@ class Produto(ModelBase):
 ### Por que a memória explodiu?
 
 <img src="images/0005-embedding-query.png" data-preview-image>
+
+---
+
+### Vamos pegar apenas os valores que a gente precisa
+
+```python
+def vendas(request):
+    pedidos = (
+        Pedido.objects.order_by("-data_criacao")
+        .only(
+            "id","status","desconto_pct","data_entrega",
+            "cliente_id","cliente__nome",
+            "cliente__sobrenome",
+        )
+        .select_related("cliente")
+        .prefetch_related(
+            Prefetch(
+                "itens",
+                queryset=ItemPedido.objects.only(
+                    "pedido_id", "preco_venda", "quantidade"
+                )))
+      )
+
+    return render(request, "casas_floripa/vendas.html", {"pedidos": pedidos})
+```
+
+---
+
+### Podemos voltar pro boteco
+
+<img src="images/0005-embedding-memory.png" data-preview-image>
