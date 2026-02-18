@@ -10,7 +10,11 @@ DEFAULT_LIMIT = 10
 def vendas(request):
     inicio = time.monotonic()
 
-    pedidos = Pedido.objects.order_by("-data_criacao")
+    pedidos = (
+        Pedido.objects.order_by("-data_criacao")
+        .select_related("cliente")
+        .prefetch_related("itens")
+    )
 
     if "all" not in request.GET:
         pedidos = pedidos[:DEFAULT_LIMIT]
