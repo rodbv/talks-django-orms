@@ -189,4 +189,16 @@ WHERE "itempedido"."pedido_id" IN (
 
 ---
 
+### Como isso nos ajudou?
+
+<img class="img" src="images/0003-nplusone-antes-depois-report-time.png" data-preview-image >
+
+---
+
+### Como isso nos ajudou?
+
+<img class="img" src="images/0003-nplusone-silk.png" data-preview-image>
+
+---
+
 ## Podemos melhorar mais ainda?
