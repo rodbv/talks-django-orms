@@ -36,3 +36,5 @@ slides/node_modules/
 # OS
 .DS_Store
 Thumbs.db
+db_02.sqlite3
+db.sqlite3-journal
