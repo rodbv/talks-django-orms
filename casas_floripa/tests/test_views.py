@@ -19,11 +19,11 @@ class TestVendasView:
     """Tests for the vendas report view."""
 
     @override_settings(MIDDLEWARE=_MIDDLEWARE_NO_PROFILING)
-    def test_vendas_render_uses_two_queries(self, client, django_assert_num_queries):
-        """Garante que a renderização da página usa sempre 2 queries (pedidos+cliente, itens)."""
+    def test_vendas_render_uses_one_query(self, client, django_assert_num_queries):
+        """Garante que a renderização usa 1 query (pedidos+cliente+valor_total no DB)."""
         cliente = baker.make(Cliente)
         baker.make(Pedido, cliente=cliente, _quantity=2)
-        with django_assert_num_queries(2):
+        with django_assert_num_queries(1):
             client.get("/vendas/")
 
     def test_returns_200_with_no_pedidos(self, client):

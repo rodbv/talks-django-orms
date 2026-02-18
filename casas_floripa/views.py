@@ -1,8 +1,8 @@
-from django.db.models import Prefetch
+from django.db.models import F, Sum
 from django.shortcuts import render
 
 from casas_floripa.decorators import measure_time_and_memory
-from casas_floripa.models import ItemPedido, Pedido
+from casas_floripa.models import Pedido
 
 DEFAULT_LIMIT = 10
 
@@ -23,13 +23,8 @@ def vendas(request):
             "cliente__sobrenome",
         )
         .select_related("cliente")
-        .prefetch_related(
-            Prefetch(
-                "itens",
-                queryset=ItemPedido.objects.only(
-                    "pedido_id", "preco_venda", "quantidade"
-                ),
-            )
+        .annotate(
+            valor_total_calc=Sum(F("itens__preco_venda") * F("itens__quantidade"))
         )
     )
 

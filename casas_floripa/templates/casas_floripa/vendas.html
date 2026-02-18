@@ -53,7 +53,7 @@
           <td>
             <span class="badge badge-{{ pedido.status }}">{{ pedido.get_status_display }}</span>
           </td>
-          <td class="text-end mono">R$ {{ pedido.valor_total }}</td>
+          <td class="text-end mono">R$ {{ pedido.valor_total_calc|floatformat:2 }}</td>
           <td class="text-end mono">{{ pedido.desconto_pct }}%</td>
           <td class="mono">{{ pedido.data_entrega|date:"d/m/Y"|default:"—" }}</td>
           <td class="mono">{{ pedido.data_criacao|date:"d/m/Y H:i" }}</td>
