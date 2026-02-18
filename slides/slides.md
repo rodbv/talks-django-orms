@@ -51,6 +51,7 @@ WHERE ("preco" <= 100
 ## Vamos criar um relatório de vendas
 
 <a href="http://localhost:8000/vendas/" target="_blank" rel="noopener noreferrer">Relatório de vendas</a>
+<img src="images/0001-report-inicial.png" data-preview-image />
 
 ---
 
@@ -89,7 +90,13 @@ def vendas(request):
 
 ## Por que tá meio lento? 🤔
 
-<a href="http://localhost:8000/silk" target="_blank" rel="noopener noreferrer">Silk: ferramenta de desempenho do Django</a>
+<img src="images/0001-report-inicial.png" data-preview-image />
+
+---
+
+#### Vamos ver as consultas ao banco de dados com <a href="http://localhost:8000/silk" target="_blank" rel="noopener noreferrer">Silk</a>
+
+<img data-preview-image src="images/0002-silk-nplusone.png" />
 
 ---
 
@@ -182,4 +189,38 @@ WHERE "itempedido"."pedido_id" IN (
 
 ---
 
-## Podemos melhorar mais ainda?
+### Como isso nos ajudou?
+
+<img src="images/0003-nplusone-antes-depois-report-time.png" data-preview-image >
+
+---
+
+### Como isso nos ajudou?
+
+<img src="images/0003-nplusone-silk.png" data-preview-image>
+
+---
+
+### Tava tudo bem até uma feature nova aparecer
+
+```python
+class Produto(ModelBase):
+    nome = models.CharField(max_length=200)
+    descricao = models.TextField()
+    # ... mais campos ...
+
+    # campo novo para salvar o produto vetorizado
+    vector_embedding = models.TextField(blank=True, null=True)
+```
+
+---
+
+### Tava tudo bem até uma feature nova aparecer
+
+<img src="images/0004-embedding-memory.png" data-preview-image>
+
+---
+
+### Por que a memória explodiu?
+
+<img src="images/0005-embedding-query.png" data-preview-image>
