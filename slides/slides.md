@@ -279,3 +279,52 @@ def valor_total(self):
 ---
 
 ### Campos calculados com annotate()
+
+```python
+def vendas(request):
+  pedidos = (
+    Pedido.objects.order_by("-data_criacao")
+    .only(
+      "id",
+      "status",
+      ...
+      "cliente__sobrenome",
+    )
+    .select_related("cliente")
+    .annotate(
+        valor_total_calc=Sum(
+          F("itens__preco_venda") * F("itens__quantidade")
+        )
+    )
+  )
+    ...
+```
+
+---
+
+### Valeu banquinho!
+
+```sql[7,8 ]
+SELECT "pedido"."id",
+  "pedido"."data_criacao",
+  "pedido"."cliente_id",
+  "pedido"."status",
+  "pedido"."desconto_pct",
+  "pedido"."data_entrega",
+  SUM(("itempedido"."preco_venda" * "itempedido"."quantidade"))
+      AS "valor_total_calc",
+  "cliente"."id",
+  "cliente"."nome",
+  "cliente"."sobrenome"
+FROM "pedido"
+LEFT OUTER JOIN "itempedido" ON
+  ("pedido"."id" = "itempedido"."pedido_id")
+INNER JOIN "cliente" ON ("pedido"."cliente_id" = "cliente"."id")
+ORDER BY "pedido"."data_criacao" DESC
+```
+
+---
+
+### Valeu banquinho!
+
+<img src="images/0006-annotate.png" data-preview-image>
