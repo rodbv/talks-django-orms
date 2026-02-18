@@ -51,6 +51,7 @@ WHERE ("preco" <= 100
 ## Vamos criar um relatório de vendas
 
 <a href="http://localhost:8000/vendas/" target="_blank" rel="noopener noreferrer">Relatório de vendas</a>
+<img class="img" src="images/0001-report-inicial.png" data-preview-image />
 
 ---
 
@@ -87,13 +88,19 @@ def vendas(request):
 
 ---
 
-# Por que tá meio lento? 🤔
+## Por que tá meio lento? 🤔
 
-<a href="http://localhost:8000/silk" target="_blank" rel="noopener noreferrer">Silk: ferramenta de desempenho do Django</a>
+<img class="img" src="images/0001-report-inicial.png" data-preview-image />
 
 ---
 
-# N+1
+#### Vamos ver as consultas ao banco de dados com <a href="http://localhost:8000/silk" target="_blank" rel="noopener noreferrer">Silk</a>
+
+<img data-preview-image class="img" src="images/0002-silk-nplusone.png" />
+
+---
+
+## N+1
 
 <div style="font-size: 0.75em">
 
@@ -118,6 +125,8 @@ Para cada Pedido, são feitas duas consultas extra:
 </tbody>
 ```
 
-# Como resolver?
+---
+
+## Como resolver?
 
 Vamos incluir os dados do cliente e os itens do pedido na consulta original
