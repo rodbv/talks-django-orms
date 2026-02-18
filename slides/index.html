@@ -11,6 +11,7 @@
   <style>
     .reveal pre { background: #f6f8fa; }
     .reveal pre code { background: none; padding: 0.5em; }
+    .reveal img.img { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); }
   </style>
 </head>
 <body>
@@ -23,9 +24,10 @@
     import Reveal from './node_modules/reveal.js/dist/reveal.esm.js';
     import Markdown from './node_modules/reveal.js/plugin/markdown/markdown.esm.js';
     import Highlight from './node_modules/reveal.js/plugin/highlight/highlight.esm.js';
+    import Zoom from './node_modules/reveal.js/plugin/zoom/zoom.esm.js';
     Reveal.initialize({
       hash: true,
-      plugins: [Markdown, Highlight],
+      plugins: [Markdown, Highlight, Zoom],
     }).then(() => {
       function addLineNumbers() {
         document.querySelectorAll('.reveal pre code').forEach((el) => {
