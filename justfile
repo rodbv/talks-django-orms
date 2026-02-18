@@ -1,6 +1,14 @@
-# Rodar o servidor
+# Rodar o servidor (sem Silk nem DDT)
 run:
     uv run python manage.py runserver
+
+# Rodar com Silk (profiling em /silk/)
+silk:
+    SILK=TRUE uv run python manage.py runserver
+
+# Rodar com Django Debug Toolbar (em /__debug__/)
+ddt:
+    DDT=TRUE uv run python manage.py runserver
 
 # Criar migrações e aplicar
 mmm:

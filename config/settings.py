@@ -10,10 +10,20 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+# Profiling: SILK=TRUE → Silk; DDT=TRUE → Django Debug Toolbar; nenhum → sem toolbar
+def _env_true(name: str) -> bool:
+    return os.environ.get(name, "").upper() in ("TRUE", "1", "YES")
+
+
+USE_SILK = _env_true("SILK")
+USE_DDT = _env_true("DDT")
 
 
 # Quick-start development settings - unsuitable for production
@@ -32,6 +42,12 @@ INTERNAL_IPS = ["127.0.0.1"]
 
 # Application definition
 
+_profiling_apps = []
+if USE_SILK:
+    _profiling_apps.append("silk")
+if USE_DDT:
+    _profiling_apps.append("debug_toolbar")
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -39,7 +55,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "debug_toolbar",
+    *_profiling_apps,
     "django_browser_reload",
     "casas_floripa",
 ]
@@ -55,7 +71,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    *(["silk.middleware.SilkyMiddleware"] if USE_SILK else []),
+    *(["debug_toolbar.middleware.DebugToolbarMiddleware"] if USE_DDT else []),
 ]
 
 

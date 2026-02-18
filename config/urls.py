@@ -28,6 +28,9 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns = [
-        path("__debug__/", include("debug_toolbar.urls")),
-    ] + urlpatterns
+    extra = []
+    if getattr(settings, "USE_SILK", False):
+        extra.append(path("silk/", include("silk.urls", namespace="silk")))
+    if getattr(settings, "USE_DDT", False):
+        extra.append(path("__debug__/", include("debug_toolbar.urls")))
+    urlpatterns = extra + urlpatterns
