@@ -25,6 +25,23 @@ def _env_true(name: str) -> bool:
 USE_SILK = _env_true("SILK")
 USE_DDT = _env_true("DDT")
 
+if USE_SILK:
+    SILKY_PYTHON_PROFILER = True
+    SILKY_META = (
+        True  # mostra tempo que o Silk leva para salvar (impacto do próprio Silk)
+    )
+    # Profiler result files (obrigatório quando SILKY_PYTHON_PROFILER = True)
+    from django.conf.global_settings import STORAGES as _DEFAULT_STORAGES
+
+    STORAGES = {
+        **_DEFAULT_STORAGES,
+        "SILKY_STORAGE": {
+            "BACKEND": "django.core.files.storage.FileSystemStorage",
+            "OPTIONS": {},
+            "LOCATION": str(BASE_DIR / "silk_profiles"),
+        },
+    }
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/

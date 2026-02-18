@@ -17,6 +17,7 @@ db.sqlite3-journal
 media/
 staticfiles/
 collected_static/
+silk_profiles/
 
 # Environment
 .env
