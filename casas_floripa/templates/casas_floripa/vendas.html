@@ -51,7 +51,7 @@
           <td class="mono">{{ pedido.id }}</td>
           <td>{{ pedido.cliente }}</td>
           <td>
-            <span class="badge badge-{{ pedido.status }}">{{ pedido.get_status_display }}</span>
+            <span class="badge badge-{{ pedido.status }}">{{ pedido.status_display }}</span>
           </td>
           <td class="text-end mono">R$ {{ pedido.valor_total_calc|floatformat:2 }}</td>
           <td class="text-end mono">{{ pedido.desconto_pct }}%</td>
