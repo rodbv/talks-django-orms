@@ -255,3 +255,27 @@ def vendas(request):
 ### Podemos voltar pro boteco
 
 <img src="images/0005-embedding-memory.png" data-preview-image>
+
+---
+
+### Mas dá pra melhorar um pouco mais?
+
+Estamos calculando o valor total de cada pedido no Python, um a um 🥹
+
+```python
+@property
+def valor_total(self):
+    total = Decimal(
+        sum(
+            item.preco_venda * item.quantidade
+            for item in self.itens.all()
+        )
+    )
+    return total.quantize(Decimal("0.01"))
+```
+
+..e o banco de dados pode fazer essas contas pra gente
+
+---
+
+### Campos calculados com annotate()
