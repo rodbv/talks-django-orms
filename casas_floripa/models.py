@@ -89,6 +89,7 @@ class Pedido(ModelBase):
     )
     desconto_pct = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     data_entrega = models.DateField(null=True, blank=True)
+    vector_embedding = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name = "pedido"
