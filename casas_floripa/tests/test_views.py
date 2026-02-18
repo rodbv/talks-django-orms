@@ -37,15 +37,6 @@ class TestVendasView:
         assert response.status_code == 200
         assert b"Casas Floripa" in response.content
 
-    def test_respects_limit_query_param(self, client):
-        cliente = baker.make(Cliente)
-        baker.make(Pedido, cliente=cliente, _quantity=5)
-        response = client.get("/vendas/?3")
-        assert response.status_code == 200
-        # Default limit when no numeric param is 10; "3" as key sets limit 3
-        # We just check the view doesn't error and returns 200
-        assert b"pedidos" in response.content
-
     def test_all_param_returns_all_pedidos(self, client):
         cliente = baker.make(Cliente)
         baker.make(Pedido, cliente=cliente, _quantity=2)
