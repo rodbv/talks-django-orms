@@ -1,14 +1,30 @@
 """Tests for casas_floripa views."""
 
 import pytest
+from django.test import override_settings
 from model_bakery import baker
 
 from casas_floripa.models import Cliente, Pedido
+
+# Middleware sem Silk/DDT para testes de contagem de queries (só as da view).
+from django.conf import settings as django_settings
+
+_MIDDLEWARE_NO_PROFILING = [
+    m for m in django_settings.MIDDLEWARE if "silk" not in m and "DebugToolbar" not in m
+]
 
 
 @pytest.mark.django_db
 class TestVendasView:
     """Tests for the vendas report view."""
+
+    @override_settings(MIDDLEWARE=_MIDDLEWARE_NO_PROFILING)
+    def test_vendas_render_uses_two_queries(self, client, django_assert_num_queries):
+        """Garante que a renderização da página usa sempre 2 queries (pedidos+cliente, itens)."""
+        cliente = baker.make(Cliente)
+        baker.make(Pedido, cliente=cliente, _quantity=2)
+        with django_assert_num_queries(2):
+            client.get("/vendas/")
 
     def test_returns_200_with_no_pedidos(self, client):
         response = client.get("/vendas/")
