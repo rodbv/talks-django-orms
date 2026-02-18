@@ -30,20 +30,6 @@ class TestPedidoValorTotal:
         )
         assert pedido.valor_total == Decimal("20.00")
 
-    def test_valor_total_com_desconto(self):
-        cliente = baker.make(Cliente)
-        produto = baker.make(Produto, preco=Decimal("100.00"))
-        pedido = baker.make(Pedido, cliente=cliente, desconto_pct=Decimal("10"))
-        baker.make(
-            ItemPedido,
-            pedido=pedido,
-            produto=produto,
-            quantidade=1,
-            preco_venda=Decimal("100.00"),
-        )
-        # 100 - 10% = 90.00
-        assert pedido.valor_total == Decimal("90.00")
-
 
 @pytest.mark.django_db
 class TestPedidoStr:

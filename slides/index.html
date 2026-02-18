@@ -1,45 +1,64 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Django ORM — performance</title>
-  <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css">
-  <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/beige.css">
-  <!-- Light code theme (Python-friendly); override after reveal theme -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css" crossorigin="anonymous">
-  <style>
-    .reveal pre { background: #f6f8fa; }
-    .reveal pre code { background: none; padding: 0.5em; }
-    .reveal img.img { box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15); }
-  </style>
-</head>
-<body>
-  <div class="reveal">
-    <div class="slides">
-      <section data-markdown="slides.md" data-separator="^\r?\n---\r?\n$" data-separator-notes="^Note:"></section>
-    </div>
-  </div>
-  <script type="module">
-    import Reveal from './node_modules/reveal.js/dist/reveal.esm.js';
-    import Markdown from './node_modules/reveal.js/plugin/markdown/markdown.esm.js';
-    import Highlight from './node_modules/reveal.js/plugin/highlight/highlight.esm.js';
-    import Zoom from './node_modules/reveal.js/plugin/zoom/zoom.esm.js';
-    Reveal.initialize({
-      hash: true,
-      plugins: [Markdown, Highlight, Zoom],
-    }).then(() => {
-      function addLineNumbers() {
-        document.querySelectorAll('.reveal pre code').forEach((el) => {
-          if (el.hasAttribute('data-line-numbers')) return;
-          el.setAttribute('data-line-numbers', '');
-          const highlight = Reveal.getPlugin('highlight');
-          if (highlight && highlight.highlightBlock) highlight.highlightBlock(el);
-        });
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Django ORM — performance</title>
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/reveal.css" />
+    <link rel="stylesheet" href="node_modules/reveal.js/dist/theme/beige.css" />
+    <!-- Light code theme (Python-friendly); override after reveal theme -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+      crossorigin="anonymous"
+    />
+    <style>
+      .reveal pre {
+        background: #f6f8fa;
       }
-      addLineNumbers();
-      setTimeout(addLineNumbers, 400);
-    });
-  </script>
-</body>
+      .reveal pre code {
+        background: none;
+        padding: 0.5em;
+      }
+      .reveal img.img {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+      .reveal .small {
+        font-size: 0.65em;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section
+          data-markdown="slides.md"
+          data-separator="^\r?\n---\r?\n$"
+          data-separator-notes="^Note:"
+        ></section>
+      </div>
+    </div>
+    <script type="module">
+      import Reveal from "./node_modules/reveal.js/dist/reveal.esm.js";
+      import Markdown from "./node_modules/reveal.js/plugin/markdown/markdown.esm.js";
+      import Highlight from "./node_modules/reveal.js/plugin/highlight/highlight.esm.js";
+      import Zoom from "./node_modules/reveal.js/plugin/zoom/zoom.esm.js";
+      Reveal.initialize({
+        hash: true,
+        plugins: [Markdown, Highlight, Zoom],
+      }).then(() => {
+        function addLineNumbers() {
+          document.querySelectorAll(".reveal pre code").forEach((el) => {
+            if (el.hasAttribute("data-line-numbers")) return;
+            el.setAttribute("data-line-numbers", "");
+            const highlight = Reveal.getPlugin("highlight");
+            if (highlight && highlight.highlightBlock)
+              highlight.highlightBlock(el);
+          });
+        }
+        addLineNumbers();
+        setTimeout(addLineNumbers, 400);
+      });
+    </script>
+  </body>
 </html>

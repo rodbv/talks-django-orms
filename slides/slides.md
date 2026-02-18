@@ -342,3 +342,52 @@ O prefetch_related também foi embora, porque ele tava sendo usado pra essa cont
 ### Como sair desse jogo de gato-e-rato?
 
 <img  data-preview-image src="images/0007-whack-a-mole.png">
+
+---
+
+#### Garantindo que o N+1 não volta com django_assert_num_queries
+
+```python
+def test_vendas_render_uses_one_query(self, client, django_assert_num_queries):
+    cliente = baker.make(Cliente)
+    baker.make(Pedido, cliente=cliente, _quantity=5)
+
+    with django_assert_num_queries(1):
+        client.get("/vendas/")
+
+```
+
+---
+
+#### Enviando só o que a view precisa com values
+
+```python
+def vendas(request):
+    pedidos = (
+      Pedido.objects.order_by("-data_criacao")
+      .annotate(
+          valor_total_calc=Sum(
+              F("itens__preco_venda") * F("itens__quantidade"))
+      )
+      .values(
+          "id",
+          "status",
+          "desconto_pct",
+          "data_entrega",
+          "data_criacao",
+          "cliente__nome",
+          "cliente__sobrenome",
+          "valor_total_calc",
+      )
+    )
+
+    return render(request, "casas_floripa/vendas.html", {"pedidos": pedidos})
+```
+
+<div class="small">
+<code>values()</code> retorna um dicionário com os dados, ao invés de objetos Django.
+
+Isso nos obriga a sermos explícitos sobre exatamente o que será enviado, e economiza
+memória
+
+</div>
