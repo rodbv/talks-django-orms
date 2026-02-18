@@ -202,3 +202,25 @@ WHERE "itempedido"."pedido_id" IN (
 ---
 
 ### Tava tudo bem até uma feature nova aparecer
+
+```python
+class Produto(ModelBase):
+    nome = models.CharField(max_length=200)
+    descricao = models.TextField()
+    # ... mais campos ...
+
+    # campo novo para salvar o produto vetorizado
+    vector_embedding = models.TextField(blank=True, null=True)
+```
+
+---
+
+### Tava tudo bem até uma feature nova aparecer
+
+<img class="img" src="images/0004-embedding-memory.png" data-preview-image>
+
+---
+
+### Por que a memória explodiu?
+
+<img class="img" src="images/0005-embedding-query.png" data-preview-image>
