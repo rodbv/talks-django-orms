@@ -1,4 +1,4 @@
-# Django ORM performance: avoiding the most common mistakes
+## Django ORM performance: avoiding the most common mistakes
 
 **Talk length:** 30–40 minutes  
 **Style:** Show current situation → fix one issue → measure improvement (Debug Toolbar, profiling) → “Are we done?” → repeat until done.
@@ -6,6 +6,7 @@
 ---
 
 ## 1. Intro to ORM
+
 - [ ]
 
 - Brief intro: ORM translates Python code into SQL queries.
@@ -14,6 +15,7 @@
 ---
 
 ## 2. Show v1 (no optimizations)
+
 - [ ]
 
 - Demo the `/vendas` page as-is: no `prefetch_related`, no `select_related`, no `only()`, no index on ordering.
@@ -23,6 +25,7 @@
 ---
 
 ## 3. Fix N+1: prefetch_related + select_related
+
 - [ ]
 
 - Add `select_related("cliente")` and `prefetch_related("itens")`.
@@ -32,6 +35,7 @@
 ---
 
 ## 4. Compute in the DB instead of Python
+
 - [ ]
 
 - We’re still loading all `itens` rows just to sum them for `valor_total`.
@@ -41,10 +45,11 @@
 
 ---
 
-## 5. SELECT * → only()
+## 5. SELECT \* → only()
+
 - [ ]
 
-- Show that we’re still fetching all columns (SELECT *).
+- Show that we’re still fetching all columns (SELECT \*).
 - Add `only()` (and `defer()` if needed) to limit columns.
 - Clarify: same number of queries, but less data per row (memory and I/O).
 - **“Are we done?”** → No.
@@ -52,6 +57,7 @@
 ---
 
 ## 6. EXPLAIN and index
+
 - [ ]
 
 - Show the query plan (SQLite: `EXPLAIN QUERY PLAN`) — e.g. full table SCAN on the default ordering.
@@ -62,6 +68,7 @@
 ---
 
 ## 7. Regression: client asked for `produto.nome`
+
 - [ ]
 
 - Add something in the template that touches `item.produto` (e.g. product name).
@@ -73,6 +80,7 @@
 ---
 
 ## 8. If time: tooling (django-seal or zen-queries)
+
 - [ ]
 
 - **zen-queries:** Explicitly mark where queries are allowed; raises awareness of “queries in view vs in template.”

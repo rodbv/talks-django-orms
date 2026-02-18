@@ -87,13 +87,13 @@ def vendas(request):
 
 ---
 
-# Por que tá meio lento? 🤔
+## Por que tá meio lento? 🤔
 
 <a href="http://localhost:8000/silk" target="_blank" rel="noopener noreferrer">Silk: ferramenta de desempenho do Django</a>
 
 ---
 
-# N+1
+## N+1
 
 <div style="font-size: 0.75em">
 
@@ -118,6 +118,68 @@ Para cada Pedido, são feitas duas consultas extra:
 </tbody>
 ```
 
-# Como resolver?
+---
+
+## Como resolver?
 
 Vamos incluir os dados do cliente e os itens do pedido na consulta original
+
+```python[2-6]
+def vendas(request):
+    pedidos = (
+        Pedido.objects.order_by("-data_criacao")
+        .select_related("cliente")
+        .prefetch_related("itens")
+    )
+
+    if "all" not in request.GET:
+        pedidos = pedidos[:DEFAULT_LIMIT]
+
+    return render(request, "casas_floripa/vendas.html", {"pedidos": pedidos})
+```
+
+---
+
+## select_related vira um JOIN
+
+Ou seja, os dados dos clientes são trazidos juntos de cada pedido
+
+```sql
+SELECT "pedido"."id",
+       "pedido"."data_criacao",
+      ...
+       "cliente"."id",
+       "cliente"."nome",
+       "cliente"."sobrenome",
+      ...
+FROM "pedido" INNER JOIN "cliente"
+  ON "pedido"."cliente_id" = "cliente"."id"
+...
+ORDER BY "pedido"."data_criacao" DESC
+
+```
+
+---
+
+### Prefetch_related busca todos itens relacionados
+
+```sql
+SELECT "itempedido"."id",
+       "itempedido"."data_criacao",
+       "itempedido"."data_atualizacao",
+       "itempedido"."pedido_id",
+       "itempedido"."produto_id",
+       "itempedido"."quantidade",
+       "itempedido"."preco_venda"
+FROM "itempedido"
+WHERE "itempedido"."pedido_id" IN (
+  9562,
+  8849,
+  ...,
+  10279
+)
+```
+
+---
+
+## Podemos melhorar mais ainda?

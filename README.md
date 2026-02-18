@@ -1,4 +1,4 @@
-# Django ORM — performance (talk)
+## Django ORM — performance (talk)
 
 Slides and demo app for a talk on avoiding common Django ORM performance mistakes.
 
