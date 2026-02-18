@@ -34,6 +34,7 @@ class Cliente(ModelBase):
         choices=StatusFinanceiro.choices,
         default=StatusFinanceiro.REGULAR,
     )
+    vector_embedding = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name = "cliente"
@@ -64,6 +65,7 @@ class Produto(ModelBase):
     categoria = models.ForeignKey(
         Categoria, on_delete=models.SET_NULL, null=True, blank=True
     )
+    vector_embedding = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name = "produto"
@@ -87,6 +89,7 @@ class Pedido(ModelBase):
     )
     desconto_pct = models.DecimalField(max_digits=5, decimal_places=2, default=0)
     data_entrega = models.DateField(null=True, blank=True)
+    vector_embedding = models.TextField(blank=True, null=True)
 
     class Meta:
         verbose_name = "pedido"
