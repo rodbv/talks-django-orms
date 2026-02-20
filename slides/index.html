@@ -14,7 +14,8 @@
     />
     <style>
       .reveal p,
-      ul {
+      ul,
+      .tabela-slide table {
         font-size: 0.6em;
       }
       .reveal pre {
@@ -39,6 +40,20 @@
       .reveal .mermaid svg {
         max-width: 100%;
         height: auto;
+      }
+      .reveal .tabela-slide table {
+        border-collapse: collapse;
+        border: 1px solid currentColor;
+        border-bottom: 1px solid currentColor;
+        background-color: white;
+      }
+      .reveal .tabela-slide table th,
+      .reveal .tabela-slide table td {
+        border: 1px solid currentColor;
+        padding: 0.25em 0.5em;
+      }
+      .reveal .tabela-slide table tr:last-child td {
+        border-bottom: 1px solid currentColor;
       }
     </style>
   </head>
