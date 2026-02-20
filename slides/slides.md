@@ -143,12 +143,10 @@ Template: combina HTML com blocos Jinja
 
 ## N+1
 
-<div style="font-size: 0.6em">
 Para cada Pedido, são feitas duas consultas extra:
 
 - Uma para dados do cliente
 - Outra para itens de pedido (via valor total, que faz a conta com pedidos)
-</div>
 
 ```jinja[2,5,6]
 <tbody>
