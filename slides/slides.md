@@ -3,7 +3,7 @@
 Evitando os erros mais comuns.
 
 <div style="display: flex; justify-content: space-between; margin-top: 2em; font-size: 0.7em; color: #888;">
-  <span>Python Floripa 92</span>
+  <span>Python Floripa 93</span>
   <span>rodrigo.vieira@gmail.com</span>
 </div>
 
@@ -55,7 +55,44 @@ WHERE ("preco" <= 100
 
 ---
 
+## Dados principais
+
+```mermaid
+classDiagram
+  direction LR
+  class Cliente {
+    id
+    nome
+    sobrenome
+    ...
+  }
+
+  class Pedido {
+    id
+    cliente_id
+    data_criacao
+    ...
+  }
+
+  class ItemPedido {
+    id
+    pedido_id
+    quantidade
+    preco_venda
+    ...
+  }
+
+  Cliente --> Pedido : faz
+  Pedido --> ItemPedido : contem
+```
+
+---
+
 ## Como o Django usa ORMs
+
+<div class="small">
+Views: coletam os dados a serem renderizados no template
+</div>
 
 ```python
 def vendas(request):
@@ -71,6 +108,10 @@ def vendas(request):
 ---
 
 ## Como o Django usa ORMs
+
+<div class="small">
+Template: combina HTML com blocos Jinja
+</div>
 
 ```jinja
 <tbody>
@@ -88,7 +129,7 @@ def vendas(request):
 
 ---
 
-## Por que tá meio lento? 🤔
+## Por que tá meio lento em prod? 🤔
 
 <img src="images/0001-report-inicial.png" data-preview-image />
 
@@ -102,14 +143,10 @@ def vendas(request):
 
 ## N+1
 
-<div style="font-size: 0.75em">
-
 Para cada Pedido, são feitas duas consultas extra:
 
-- Uma para dados do cliente em `pedido.cliente`
-- Outra para `self.itens.all()` em `pedido.valor_total`
-
-</div>
+- Uma para dados do cliente
+- Outra para itens de pedido (via valor total, que faz a conta com pedidos)
 
 ```jinja[2,5,6]
 <tbody>
@@ -129,25 +166,21 @@ Para cada Pedido, são feitas duas consultas extra:
 
 ## Como resolver?
 
-Vamos incluir os dados do cliente e os itens do pedido na consulta original
+Primeiro vamos trazer os dados do cliente do pedido junto com o pedido
 
 ```python[2-6]
 def vendas(request):
     pedidos = (
         Pedido.objects.order_by("-data_criacao")
         .select_related("cliente")
-        .prefetch_related("itens")
     )
-
-    if "all" not in request.GET:
-        pedidos = pedidos[:DEFAULT_LIMIT]
 
     return render(request, "casas_floripa/vendas.html", {"pedidos": pedidos})
 ```
 
 ---
 
-## select_related vira um JOIN
+## O select_related vira um JOIN
 
 Ou seja, os dados dos clientes são trazidos juntos de cada pedido
 
@@ -164,6 +197,45 @@ FROM "pedido" INNER JOIN "cliente"
 ...
 ORDER BY "pedido"."data_criacao" DESC
 
+```
+
+---
+
+## O select_related vira um JOIN
+
+<div class="tabela-slide">
+
+| pedido.id | pedido.data_criacao | cliente.id | cliente.nome | cliente.sobrenome |
+| --------- | ------------------- | ---------- | ------------ | ----------------- |
+| 9562      | 2025-01-15 10:30    | 42         | Maria        | Silva             |
+| 8849      | 2025-01-14 16:45    | 17         | João         | Santos            |
+
+</div>
+
+Uma linha por pedido; dados do cliente na mesma linha (JOIN).
+
+---
+
+## Já melhorou um pouco...
+
+<img src="images/0001-report-inicial-2001-queries.png" data-preview-image>
+
+---
+
+## Como resolver o segundo N+1 com itens de pedido?
+
+Vamos fazer prefetch de todos itens de cada pedido
+
+```python[5]
+def vendas(request):
+    pedidos = (
+        Pedido.objects.order_by("-data_criacao")
+        .select_related("cliente")
+        .prefetch_related("itens")
+
+    )
+
+    return render(request, "casas_floripa/vendas.html", {"pedidos": pedidos})
 ```
 
 ---
