@@ -26,6 +26,16 @@
       .reveal .small {
         font-size: 0.65em;
       }
+      .reveal .hljs-ln-numbers {
+        opacity: 0.3;
+      }
+      .reveal .mermaid {
+        font-size: 0.55em;
+      }
+      .reveal .mermaid svg {
+        max-width: 100%;
+        height: auto;
+      }
     </style>
   </head>
   <body>
@@ -38,18 +48,60 @@
         ></section>
       </div>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js" crossorigin="anonymous"></script>
     <script type="module">
       import Reveal from "./node_modules/reveal.js/dist/reveal.esm.js";
       import Markdown from "./node_modules/reveal.js/plugin/markdown/markdown.esm.js";
       import Highlight from "./node_modules/reveal.js/plugin/highlight/highlight.esm.js";
       import Zoom from "./node_modules/reveal.js/plugin/zoom/zoom.esm.js";
+
       Reveal.initialize({
         hash: true,
         plugins: [Markdown, Highlight, Zoom],
       }).then(() => {
+        const mermaid = window.mermaid;
+        mermaid.initialize({
+          startOnLoad: false,
+          er: { layoutDirection: "LR" },
+          flowchart: { useMaxWidth: true },
+        });
+        function isMermaidBlock(el) {
+          const code = el.textContent.trim();
+          return el.classList.contains("language-mermaid") ||
+            (el.className && el.className.includes("mermaid")) ||
+            /^\s*(flowchart|graph|erDiagram|sequenceDiagram|classDiagram)/m.test(code);
+        }
+        function renderMermaidBlocks() {
+          document.querySelectorAll(".reveal pre code").forEach((codeEl) => {
+            if (!isMermaidBlock(codeEl)) return;
+            const pre = codeEl.closest("pre");
+            if (!pre || pre.getAttribute("data-mermaid-done")) return;
+            const code = codeEl.textContent.trim();
+            if (!code) return;
+            mermaid.render("mermaid-" + Math.random().toString(36).slice(2), code).then(({ svg }) => {
+              const wrap = document.createElement("div");
+              wrap.className = "mermaid";
+              wrap.style.textAlign = "center";
+              wrap.setAttribute("data-mermaid-done", "true");
+              wrap.innerHTML = svg;
+              pre.parentNode.replaceChild(wrap, pre);
+            }).catch((err) => console.warn("Mermaid render failed:", err));
+          });
+          document.querySelectorAll(".reveal .mermaid:not([data-mermaid-done])").forEach((el) => {
+            if (el.querySelector("svg")) return;
+            const contentEl = el.firstElementChild?.tagName === "PRE" ? el.firstElementChild : el;
+            const code = contentEl.textContent.trim();
+            if (!code) return;
+            mermaid.render("mermaid-" + Math.random().toString(36).slice(2), code).then(({ svg }) => {
+              el.innerHTML = svg;
+              el.setAttribute("data-mermaid-done", "true");
+            }).catch((err) => console.warn("Mermaid render failed:", err));
+          });
+        }
         function addLineNumbers() {
           document.querySelectorAll(".reveal pre code").forEach((el) => {
             if (el.hasAttribute("data-line-numbers")) return;
+            if (isMermaidBlock(el)) return;
             el.setAttribute("data-line-numbers", "");
             const highlight = Reveal.getPlugin("highlight");
             if (highlight && highlight.highlightBlock)
@@ -57,7 +109,17 @@
           });
         }
         addLineNumbers();
-        setTimeout(addLineNumbers, 400);
+        setTimeout(renderMermaidBlocks, 100);
+        Reveal.on("ready", () => {
+          renderMermaidBlocks();
+          setTimeout(renderMermaidBlocks, 400);
+          setTimeout(renderMermaidBlocks, 900);
+          addLineNumbers();
+        });
+        Reveal.on("slidechanged", () => {
+          renderMermaidBlocks();
+          addLineNumbers();
+        });
       });
     </script>
   </body>

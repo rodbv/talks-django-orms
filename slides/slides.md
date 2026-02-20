@@ -3,7 +3,7 @@
 Evitando os erros mais comuns.
 
 <div style="display: flex; justify-content: space-between; margin-top: 2em; font-size: 0.7em; color: #888;">
-  <span>Python Floripa 92</span>
+  <span>Python Floripa 93</span>
   <span>rodrigo.vieira@gmail.com</span>
 </div>
 
@@ -55,7 +55,44 @@ WHERE ("preco" <= 100
 
 ---
 
+## Dados principais
+
+```mermaid
+classDiagram
+  direction LR
+  class Cliente {
+    id
+    nome
+    sobrenome
+    ...
+  }
+
+  class Pedido {
+    id
+    cliente_id
+    data_criacao
+    ...
+  }
+
+  class ItemPedido {
+    id
+    pedido_id
+    quantidade
+    preco_venda
+    ...
+  }
+
+  Cliente --> Pedido : faz
+  Pedido --> ItemPedido : contem
+```
+
+---
+
 ## Como o Django usa ORMs
+
+<div class="small">
+Views: coletam os dados a serem renderizados no template
+</div>
 
 ```python
 def vendas(request):
@@ -71,6 +108,10 @@ def vendas(request):
 ---
 
 ## Como o Django usa ORMs
+
+<div class="small">
+Template: combina HTML com blocos Jinja
+</div>
 
 ```jinja
 <tbody>
@@ -88,7 +129,7 @@ def vendas(request):
 
 ---
 
-## Por que tá meio lento? 🤔
+## Por que tá meio lento em prod? 🤔
 
 <img src="images/0001-report-inicial.png" data-preview-image />
 
@@ -102,13 +143,11 @@ def vendas(request):
 
 ## N+1
 
-<div style="font-size: 0.75em">
-
+<div style="font-size: 0.6em">
 Para cada Pedido, são feitas duas consultas extra:
 
-- Uma para dados do cliente em `pedido.cliente`
-- Outra para `self.itens.all()` em `pedido.valor_total`
-
+- Uma para dados do cliente
+- Outra para itens de pedido (via valor total, que faz a conta com pedidos)
 </div>
 
 ```jinja[2,5,6]
